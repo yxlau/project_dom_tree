@@ -36,7 +36,7 @@ class DOMReader
 
   def parse_closing
     return unless snippet = @html.match(/^<\/([\w]+)(.*?)\s*>/)
-    node = Node.new(snippet[1], :close, nil, [], @stack[-1], @stack[-1].depth + 1)
+    node = Node.new(snippet[1], :close, nil, [], @stack[-1], @stack[-1].depth)
     @stack[-1].children << node
     @stack.pop
     @html = snippet.post_match

@@ -15,6 +15,7 @@ class DOMTree
         queue.unshift(child)
       end
     end
+    puts
   end
 
   def print_closer(current)

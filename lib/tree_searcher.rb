@@ -8,36 +8,37 @@ class TreeSearcher
     @results = []
     #search entire tree
     queue = [@tree]
-    until queue.empty?
-      current = queue.shift
-      add_match(current, att, val)
-      if current.children
-        current.children.each { |child| queue << child }
-      end
-    end
+    search_loop(queue, att, val)
     @results
-  end
-
-  def add_match(current, att, val)
-    if attributes = current.attributes
-      attributes.each do |key, v|
-        @results << current if v == val && key == att
-      end
-    end
   end
 
   def search_descendants(node, att, val)
     @results = []
     queue = []
     add_children(node, queue)
+    search_loop(queue, att, val)
+  end
+
+  def search_loop(queue, att, val)
     until queue.empty?
       current = queue.shift
       add_match(current, att, val)
-      if current.children
-        current.children.each { |child| queue << child}
+      add_children(current, queue)
+    end
+  end
+
+  def add_match(current, att, val)
+    if attributes = current.attributes
+      attributes.each do |key, v|
+        if key == att
+          if val.class == Regexp
+            @results << current if v.match(/#{val}/)
+          else
+            @results << current if v == val
+          end
+        end
       end
     end
-
   end
 
   def add_children(node, queue)

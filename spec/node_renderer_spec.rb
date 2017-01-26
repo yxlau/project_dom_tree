@@ -52,7 +52,7 @@ describe 'NodeRenderer' do
       n = NodeRenderer.new(reader)
       n.instance_variable_set(:@node, Node.new('div', :open, '', [], nil))
       n.render
-      expect{n.set_up_stack}.to output('Sorry! This node has no sub-nodes!')
+      expect(STDOUT).to receive(:puts)
     end
   end
 

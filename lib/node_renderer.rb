@@ -21,7 +21,7 @@ class NodeRenderer
   end
 
   def set_up_stack
-    unless @node.children.empty?
+    if @node.children.empty?
       puts "Sorry! This node has no sub-nodes!"
       exit
     end
@@ -32,19 +32,22 @@ class NodeRenderer
   end
 
   def print_stats
-    puts "There are #{@node_count} nodes in the sub-tree beneath this node:"
+    puts "There are #{@node_count} node(s) in the sub-tree beneath the node <#{@node.tag} #{print_attributes}>:"
     @node_types.each do |k, v|
       puts "- #{k}: #{v}"
     end
-    puts "This node has the following attributes:"
+    puts
+
   end
 
   def print_attributes
+    str = ''
     if @node.attributes
       @node.attributes.each do |key, val|
-        puts "- #{key}: #{val}"
+        str << "#{key}=\"#{val}\""
       end
     end
+    str
   end
 
   def get_stats
