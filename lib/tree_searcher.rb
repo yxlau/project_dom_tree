@@ -1,7 +1,7 @@
 class TreeSearcher
   attr_reader :results
   def initialize(tree)
-    @tree = tree.tree
+    @tree = tree.document
   end
 
   def search_by(att, val)

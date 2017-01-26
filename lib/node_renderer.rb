@@ -6,24 +6,23 @@ class NodeRenderer
   attr_reader :node, :tree, :node_count, :node_types
   def initialize(tree)
     raise 'Please pass in a tree!' unless tree.is_a?(DOMTree)
-    @tree = tree.tree
+    @tree = tree.document
   end
 
   def render(node=nil)
     @node = node ? node : @tree
-    # total nodes in the sub-tree below this node
     set_up_stack
     get_stats
     print_stats
     print_attributes
-    # no. of each type of node in the sub-tree below this node
-    # all of the node's data attributes
   end
 
   def set_up_stack
-    if @node.children.empty?
-      puts "Sorry! This node has no sub-nodes!"
-      exit
+    if @node.children
+      if @node.children.empty? || @node.children[0].type == :close
+        puts "Sorry! This node has no sub-nodes!"
+        exit
+      end
     end
     @stack = []
     @node.children.each do |child|
