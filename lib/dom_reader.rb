@@ -26,11 +26,6 @@ class DOMReader
 
   end
 
-  def tree
-    DOMTree.new(@document)
-
-  end
-
   def parse_html
     until @html.length == 0
       parse_opening
